@@ -1,0 +1,16 @@
+{
+	"format_version": "1.8.0",
+	"animations": {
+		"animation.pntmc_verity.look_at_target": {
+			"loop": true,
+			"bones": {
+				"bb_main": {
+					"relative_to": {
+						"rotation": "entity"
+					},
+					"rotation": ["q.rotation_to_camera(0) * 0.01", "-query.body_y_rotation + query.rotation_to_camera(1)", 0]
+				}
+			}
+		}
+	}
+}

@@ -1,0 +1,92 @@
+{
+	"format_version": "1.10.0",
+	"animation_controllers": {
+		"controller.animation.pntmc_verityball": {
+			"initial_state": "idle",
+			"states": {
+				"idle": {
+					"animations": ["look_at_target"],
+					"transitions": [
+						{
+							"moving": "query.ground_speed > 0.03 || query.property('pntmc:moving')"
+						},
+						{
+							"scolding": "query.property('pntmc:scolding') && query.property('pntmc:talking')"
+						},
+						{
+							"talking": "query.property('pntmc:talking')"
+						}
+					]
+				},
+				"moving": {
+					"animations": ["look_at_target", "move"],
+					"transitions": [
+						{
+							"scold_moving": "query.property('pntmc:scolding') && query.property('pntmc:talking')"
+						},
+						{
+							"talk_moving": "query.property('pntmc:talking')"
+						},
+						{
+							"idle": "query.ground_speed < 0.03 && !query.property('pntmc:moving')"
+						}
+					]
+				},
+				"talking": {
+					"on_entry": ["v.talk_speed = math.random(0.72, 1.25);"],
+					"animations": ["look_at_target", "talk_pulse"],
+					"transitions": [
+						{
+							"scolding": "query.property('pntmc:scolding')"
+						},
+						{
+							"talk_moving": "query.ground_speed > 0.03 || query.property('pntmc:moving')"
+						},
+						{
+							"idle": "!query.property('pntmc:talking')"
+						}
+					]
+				},
+				"scolding": {
+					"on_entry": ["v.talk_speed = math.random(1.35, 2.1);"],
+					"animations": ["look_at_target", "talk_pulse"],
+					"transitions": [
+						{
+							"scold_moving": "query.ground_speed > 0.03 || query.property('pntmc:moving')"
+						},
+						{
+							"idle": "!query.property('pntmc:talking')"
+						}
+					]
+				},
+				"talk_moving": {
+					"on_entry": ["v.talk_speed = math.random(0.72, 1.25);"],
+					"animations": ["look_at_target", "move", "talk_pulse"],
+					"transitions": [
+						{
+							"scold_moving": "query.property('pntmc:scolding')"
+						},
+						{
+							"moving": "!query.property('pntmc:talking')"
+						},
+						{
+							"talking": "query.ground_speed < 0.03 && !query.property('pntmc:moving')"
+						}
+					]
+				},
+				"scold_moving": {
+					"on_entry": ["v.talk_speed = math.random(1.35, 2.1);"],
+					"animations": ["look_at_target", "move", "talk_pulse"],
+					"transitions": [
+						{
+							"moving": "!query.property('pntmc:talking')"
+						},
+						{
+							"scolding": "query.ground_speed < 0.03 && !query.property('pntmc:moving')"
+						}
+					]
+				}
+			}
+		}
+	}
+}
